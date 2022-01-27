@@ -1,0 +1,131 @@
+html, body{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body{
+    padding-top: 60px;
+}
+
+#header{
+    background-color: #ACEFFF;
+}
+
+#title{
+    font-size: 110%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#menubutton{
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.col-md-3{
+    height: 100%;
+    background-color: white;
+    border-right-style: solid;
+    border-right-color: #7070707e;
+    position: fixed;
+}
+  
+.col-md-9{
+    margin-left: 24.5%;
+}
+  
+.sectionheader{
+    font-size: 150%;
+    left: 2%;
+}
+
+.settingname{
+    font-size: 110%;
+    position: relative;
+    text-decoration: underline;
+    left: 11%;
+    cursor: pointer;
+    color: black;
+}
+
+.setting{
+    font-size: 170%;
+}
+
+#pfpsetting{
+    width: 8%;
+    height: 13%;
+}
+
+#upload{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    width: fit-content;
+    height: fit-content;
+    padding-right: 1.5%;
+    padding-left: 1.5%;
+    padding-top: .1%;
+    font-size: 100%;
+    margin-top: 1%;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: black;
+    background-color: #ACEFFF;
+    cursor: pointer;
+  }
+
+.save{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    width: fit-content;
+    height: fit-content;
+    padding-right: 1.5%;
+    padding-left: 1.5%;
+    padding-top: .2%;
+    padding-bottom: .2%;
+    font-size: 100%;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: black;
+    background-color: #A1EDA7;
+    cursor: pointer;
+}
+
+.settingtext{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    width: 25%;
+    height: 4%;
+    font-size: 200%;
+}
+
+#submit{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    width: fit-content;
+    height: fit-content;
+    padding-right: 1.5%;
+    padding-left: 1.5%;
+    padding-top: .2%;
+    padding-bottom: .2%;
+    font-size: 100%;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: black;
+    background-color: #ACEFFF;
+    cursor: pointer;
+    margin-top: .5%;
+}
+
+#default{
+    height: 2%;
+    width: 11%;
+    font-size: 80%;
+}
+
+.checkboxes{
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+.checkboxlabels{
+    font-size: 115%;
+}
+
+

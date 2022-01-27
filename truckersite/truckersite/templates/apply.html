@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<meta charset="UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title> Apply </title>
+
+    <!-- Links the .css file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/apply.css' %}">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="header">
+                    <p id="title"> Good Driver Incentive Program Application </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="sectionheader"> Name </h2>
+            </div>
+        </div>
+        <form method="POST" action="{% url 'reg'%}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="firstname" maxlength="100" placeholder="First Name" name="Name" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="lastname" maxlength="100" placeholder="Last Name" name="lname" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="sectionheader"> Contact Information </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="phone" maxlength="100" placeholder="Phone Number" name="PhoneNo" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="email" maxlength="100" placeholder="Email" name="Email" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="sectionheader"> Home Address </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="address1" maxlength="100" placeholder="Address Line 1" name="Address" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="address2" maxlength="100" placeholder="Address Line 2" name="address2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="city" maxlength="100" placeholder="City" name="city" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="state" maxlength="100" placeholder="State" name="state" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="fields" id="zip" maxlength="5" placeholder="Zip" name="zipcode" required>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="sectionheader"> Sponsor Name </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="margin-left: 38%; margin-bottom: 1%;">
+                        <!-- Source: https://stackoverflow.com/questions/50895806/bootstrap-4-multiselect-dropdown/50897096 -->
+                        <select id="sponsor" class="selectpicker" multiple name="sponsor" required>
+                        <!-- EXAMPLE: <option value = "spon1"> Organization 1</option> --> 
+                        {% for org in orgs %}
+                            <option value = {{org.id}}>{{org.name}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button id="sumbitapplication" onclick="submitApplication()"> Submit </button>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <!-- Linking another html document to a button source: https://www.w3schools.com/html/html_links.asp -->
+                {% if loggedIn %}
+                    <button id="cancelapplication" onclick="location.href = '{% url 'driverDash' %}'"> Cancel </button> 
+                {% else %}
+                    <button id="cancelapplication" onclick="location.href = '{% url 'loginScreen' %}'"> Cancel </button> 
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!--
+
+
+     -->
+
+    <!-- <button id = "cancelapplication" onclick = "document.location = 'index.html'"> Cancel </button> -->
+
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang = "en-US">
+<meta charset = "UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <title> My Profile </title>
+
+    <!-- Links the .css file -->
+    {% load static%}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_profile.css'%}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+    
+    <div class = "container-fluid">
+
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <nav class = "navbar navbar-expand-md navbar-light fixed-top" id = "header">
+            <ul class = "navbar-nav w-100 justify-content-between">
+                <li class = "nav-item dropdown">
+                    <a class = "nav-link dropdown-toggle" id = "menubutton" role = "button" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded = "false"> Menu </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class = "dropdown-item" href = "{% url 'adminOrgs' %}"> Organizations </a>
+                        <!-- <a class = "dropdown-item" href = "admin_notifications.html"> Notifications </a> -->
+                        <a class = "dropdown-item" href = "{% url 'adminReportGeneration'%}"> Generate Reports </a>
+                        <!-- <a class = "dropdown-item" href = "admin_view_issues.html"> Issues </a> -->
+                        <a class = "dropdown-item" href = "{% url 'logout' %}"> Logout </a>
+                    </div>
+                </li>
+
+                <li class = "nav-item active">
+                    <a class = "nav-link" href = "{% url 'adminDash' %}" id = "title"> Good Driver Incentive Program </a>
+                </li>
+
+                <a class = "navbar-brand" href = "admin_profile.html">
+                    <img src = "{% static pic %}" width = "30" height = "30">
+                </a>
+            </ul>
+        </nav>
+
+        <div class = "row">
+            <div class = "col-md-3 stick-top">
+
+                <p id = "pagename" style = "font-size: 200%;"> My Profile </p>
+
+                <!-- https://stackoverflow.com/questions/16349490/html-css-buttons-that-scroll-down-to-different-div-sections-on-a-webpage -->
+                <p class = "sectionheader" style = "margin-top: 6%;"> Account Information </p>
+                <a class = "settingname" href = "#changepfp"> Change Profile Picture </a> <br>
+                <a class = "settingname" href = "#changeemail"> Change Email </a> <br>
+                <a class = "settingname" href = "#changepassword"> Change Password</a> <br>
+            
+            </div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class = "col-md-9 h-100">
+
+                <p class = "setting" style = "top: 3%;"> Change Profile Picture </p>
+                <img id = "pfpsetting" src = "{% static pic %}"> <br>
+
+                <form method = "POST" enctype="multipart/form-data" action = "{% url 'getNewAdminProfilePic'%}">
+                    {% csrf_token %}
+                    <input type = "file" id = "profilePic" name = "profilePic"/> <br>
+                    <button id = "upload" type = "file"> Upload Image </button>
+                </form>
+
+                <form method = "Post" action = "{% url 'getNewAdminEmail'%}">
+                    {% csrf_token %}
+                    <p class = "setting" id = "changeemail" style = "margin-top: 1.5%;"> Change Email </p>
+                    <input class = "settingtext" type = "text" id = "emailsetting" maxlength = "100" placeholder = {{currEmail}} name = "email">
+                    <button class = "save" id = "saveemail"> <i class = "fa fa-save"></i> </button>
+                </form>
+
+                <form method = "Post" action = "{% url 'getNewAdminPass'%}">
+                    {% csrf_token %}
+                    <p class = "setting" id = "changepassword" style = "margin-top: 1.5%; margin-bottom: 0;;"> Change Password </p>
+                    <h6>* Passwords should be at least 8 characters long and contain an uppercase letter, lowercase letter, special character, and a digit</h6>
+                    <input class = "settingtext" type = "password" id = "changepassword1" style = "margin-right: 100%;" maxlength = "100" placeholder = "Password" name = "password1">
+                    <input class = "settingtext" type = "password" id = "changepassword2" style = "margin-top: 1%;" maxlength = "100" placeholder = "Confirm Password" name = "password2">
+                    <button class = "save" id = "savepassword"> <i class = "fa fa-save"></i> </button>
+                </form>                
+            </div>
+
+        </div>
+
+    </div>
+</body>

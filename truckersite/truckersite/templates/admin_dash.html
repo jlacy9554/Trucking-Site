@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang = "en-US">
+<meta charset = "UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+    <title> My Dashboard </title>
+
+    <!-- Links the .css file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/driver_dash.css'%}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        function removeAdmin(){
+            if(document.getElementById("admin").value != "none"){
+                $('#removeadmin').modal('show');
+            }
+        }
+
+        function editAdmin(){
+            if(document.getElementById("admin").value != "none"){
+                $('#editadmin').modal('show');
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+    
+    <div class = "container-fluid">
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <nav class = "navbar navbar-expand-md navbar-light fixed-top" id = "header">
+            <ul class = "navbar-nav w-100 justify-content-between">
+                <li class = "nav-item dropdown">
+                    <a class = "nav-link dropdown-toggle" id = "menubutton" role = "button" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded = "false"> Menu </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class = "dropdown-item" href = "{% url 'adminOrgs' %}"> Organizations </a>
+                        <!-- <a class = "dropdown-item" href = "admin_notifications.html"> Notifications </a> -->
+                        <a class = "dropdown-item" href = "{% url 'adminReportGeneration'%}"> Generate Reports </a>
+                        <!-- <a class = "dropdown-item" href = "admin_view_issues.html"> Issues </a> -->
+                        <a class = "dropdown-item" href = "{% url 'logout' %}"> Logout </a>
+                    </div>
+                </li>
+
+                <li class = "nav-item active">
+                    <a class = "nav-link" href = "{% url 'adminDash' %}" id = "title"> Good Driver Incentive Program </a>
+                </li>
+
+                <a class = "navbar-brand" href = "{% url 'adminProfile'%}">
+                    <img src = "{% static pic %}" width = "30" height = "30">
+                </a>
+            </ul>
+        </nav>
+
+        <div class = "row text-center">
+            <div class = "col-md-12">
+                <h2 id = "pagename" style = "margin-bottom: 3%; margin-left: 0%;"> My Dashboard </h2>
+                <button id = "sponsorview" class = "pull-right" onclick = "location.href = '{% url 'adminSetSponsorView' %}'"> Sponsor View </button> 
+                <button id = "driverview" class = "pull-right" onclick = "location.href = '{% url 'adminSetDriverView' %}'"> Driver View </button> 
+            </div>
+        </div>
+
+        <div class = "row h-100">
+            <div class = "col-md-3"></div>
+
+            <div class = "col-md-3">
+                <p style = "font-size: 150%;">Organization Management: </p>
+
+                <form method = "Post" action = "{% url 'removeOrg' %}">
+                    {% csrf_token %}
+                    <select class = "form-control form-control-lg" id = "org" name = "orgID" style = "margin-bottom: 1.5%;">
+                        <option value = "none"> Select an Organization </option>
+
+                        {% for org in orgs %}
+                            <option value = {{org.id}}>{{org.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button id = "remove"> Remove Organization </button>
+                </form>
+
+                <p style = "font-size: 150%;">Add New Organization</p>
+                <form method = "Post" action = "{% url 'addOrg' %}">
+                    {% csrf_token %}
+                    <input type = "text" class = "newadmin" id = "orgname" name = "name" placeholder = "Organization Name" style = "font-size: 200%;">
+                    <button id = "add"> Add Organization </button>
+                </form>
+
+            </div>
+            <div class = "col-md-3">
+                <p style = "font-size: 150%;">Admin Management: </p>
+                <form method = "Post" action = "{% url 'editAdmin' %}">
+                    {% csrf_token %}
+                    <select class = "form-control form-control-lg" id = "admin" name = "admin" style = "margin-bottom: 1.5%;">
+                        <option value = "none"> Select an Admin </option>
+
+                        {% for admin in admins %}
+                            <option value = {{admin.id}}>{{admin.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button id = "remove" name = "remove"> Remove Admin </button>
+                    <button id = "edit" name = "edit"> Edit Admin Info </button>
+                </form>
+
+                <p style = "font-size: 150%;">Add New Admin</p>
+                <form method = "Post" action = "{% url 'addAdmin' %}">
+                    {% csrf_token %}
+                    <input type = "text" class = "newadmin" id = "email" name = "email" placeholder = "Email" style = "font-size: 200%;">
+                    <input type = "text" class = "newadmin" id = "name" name = name placeholder = "Name" style = "font-size: 200%;">
+                    <button id = "add"> Add Admin </button>
+                </form>
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class = "col-md-12">
+                <a id = "git" class = "nav-link" href = ""> Github Link </a>
+            </div>
+        </div>
+
+        <!-- Modal source: https://getbootstrap.com/docs/4.1/components/modal/ -->
+        <!-- Modal for deleteing an admin -->
+        <div class = "modal fade" id = "removeadmin" tabindex = "-1" role = "dialog" aria-labelledby = "exampleModalLabel" aria-hidden = "true">
+            <div class = "modal-dialog" role = "document">
+                <div class = "modal-content">
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "exampleModalLabel"> Remove Admin</h5>
+                        <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close">
+                            <span aria-hidden = "true">&times;</span>
+                        </button>
+                        </div>
+                        <div class = "modal-body">
+                            Are you sure you want to remove this admin?
+                        </div>
+                        <div class = "modal-footer">
+                            <button type = "button" class = "btn btn-secondary" data-dismiss = "modal" style = "background-color: #EDA1A1; border-color: #EDA1A1; color: black;"> No </button>
+                            <button type = "button" id = "delete" style = "background-color: #A1EDA7; border-color: #A1EDA7; color: black;" class = "btn btn-primary"> Yes </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal source: https://getbootstrap.com/docs/4.1/components/modal/ -->
+        <!-- Modal for editing admin info -->
+        <div class = "modal fade" id = "editadmin" tabindex = "-1" role = "dialog" aria-labelledby = "exampleModalLabel" aria-hidden = "true">
+            <div class = "modal-dialog" role = "document">
+                <div class = "modal-content">
+                        <div class = "modal-header">
+                            <h5 class = "modal-title" id = "exampleModalLabel">Edit Admin Info</h5>
+                            <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close">
+                                <span aria-hidden = "true">&times;</span>
+                            </button>
+                        </div>
+                        <div class = "modal-body">
+                            <input type = "text" class = "editing" id = "email" style = "margin-top: 2%;" placeholder = "Email"> <br>
+                            <input type = "password" class = "editing" id = "password" placeholder = "Password"> <br>
+                            <input type = "password" class = "editing" id = "confirmpassword" placeholder = "Confirm Password">
+                        </div>
+                        <div class = "modal-footer">
+                            <button type = "button" class = "btn btn-secondary" style = "background-color: #EDA1A1; border-color: #EDA1A1; color: black;" data-dismiss = "modal"> Cancel</button>
+                            <button type = "submit" id = "save"  style = "background-color: #A1EDA7; border-color: #A1EDA7; color: black;" class = "btn btn-primary">Save Changes</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

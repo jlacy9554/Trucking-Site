@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang = "en-US">
+<meta charset = "UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title> Sales By Sponsor Report </title>
+
+    <!-- Links the .css file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sales_by_sponsor.css' %}">
+    <link rel="stylesheet" type="text/css" href="sales_by_sponsor.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    
+    <div class = "container-fluid">
+
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <nav class = "navbar navbar-expand-md navbar-light fixed-top" id = "header">
+            <ul class = "navbar-nav w-100 justify-content-between">
+                <li class = "nav-item dropdown">
+                    <a class = "nav-link dropdown-toggle" id = "menubutton" role = "button" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded = "false"> Menu </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class = "dropdown-item" href = "{% url 'adminOrgs' %}"> Organizations </a>
+                        <!-- <a class = "dropdown-item" href = "admin_notifications.html"> Notifications </a> -->
+                        <a class = "dropdown-item" href = "{% url 'adminReportGeneration'%}"> Generate Reports </a>
+                        <!-- <a class = "dropdown-item" href = "admin_view_issues.html"> Issues </a> -->
+                        <a class = "dropdown-item" href = "{% url 'logout' %}"> Logout </a>
+                    </div>
+                </li>
+
+                <li class = "nav-item active">
+                    <a class = "nav-link" href = "{% url 'adminDash' %}" id = "title"> Good Driver Incentive Program </a>
+                </li>
+
+                <a class = "navbar-brand" href = "{% url 'adminProfile'%}">
+                    <img src = "{% static pic %}" width = "30" height = "30">
+                </a>
+            </ul>
+        </nav>
+
+        <div class = "row">
+            <div class = "col-md-3 text-left">
+                <div id = "sidebar">
+                    <a id = "back" href = "{% url 'adminReportGeneration'%}"> <i class = "fa fa-arrow-left"></i> Generate Report </a>
+                    <h3 class = "text-center" style = "margin-bottom: 5%; margin-top: 2%;"> Sales By Sponsor Report </h3>
+
+                    <h4> Select Sponsor(s) </h4>
+                    <!-- Source: https://stackoverflow.com/questions/50895806/bootstrap-4-multiselect-dropdown/50897096 -->
+                    <form method = "Post" action = "{% url 'getSponsorSales' %}">
+                        {% csrf_token %}
+                            <select id = "drivers" name = "sponsor" class = "selectpicker">
+                                {% if not choice %}
+                                    <option value = "all"> All Sponsors </option>
+
+                                    {% for org in orgs %}
+                                        <option value = "{{org.id}}">{{org.name}}</option>
+                                    {% endfor %}
+                                
+                                {% else %}
+                                    <option value = {{chosenOrg}}>{{orgName}}</option>
+                                {% endif %}
+                            </select>
+                            {% if not choice %}
+                                <button id = "choseorg" name = "choseOrg"> Choose Sponsor </button>
+                            {% endif %}
+
+                        <select id = "drivers" name = "driver" class = "selectpicker">
+                            <option value = "all"> All Drivers </option>
+
+                            {% for driver in drivers %}
+                                <option value = {{driver.id}}>{{driver.name}}</option>
+                            {% endfor %}
+                        </select>
+
+                        <label class="container">Detailed Report
+                            <input type="checkbox" name = "detail">
+                            <span class="checkmark"></span>
+                        </label>
+
+                        <h4> Start Date </h4>
+                        <input type = "text" id = "start" name = "startDate" placeholder = "mm/dd/yy" maxlength = "8">
+                        <h4> End Date </h4>
+                        <input type = "text" id = "end" name = "endDate" placeholder = "mm/dd/yy" maxlength = "8">
+                        
+                        <button id = "generate" name = "generate"> Generate Report </button>
+                        <button id = "download" name = "download"> Download Report <i class = "fa fa-download"></i> </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class = "col-md-9" id = "preview">
+                <p>Date Range: {{startDate}} - {{endDate}}</p>
+                {% for org in orgSales %}
+                    <p>Sponsor: {{org.name}}</p>
+
+                    {% for driver in org.drivers %}
+                        <p>Sales by: {{driver.name}}</p>
+                            {% if detailed %}
+                                <table width = "75%">
+                                    <col style = "width:20%">
+                                    <col style = "width:40%">
+                                    <col style = "width:10%">
+                                    <col style = "width:20%">
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>Product</td>
+                                        <td>Quantity</td>
+                                        <td>Cost</td>
+                                    </tr>
+                                {% for order in driver.orders %}
+                                    <tr>
+                                        <td>{{order.date}}</td>
+                                    </tr>
+
+                                    {% for product in order.products %}
+                                        <tr>
+                                            <td></td>
+                                            <td>{{product.name}}</td>
+                                            <td>{{product.qty}}</td>
+                                            <td>{{product.price}}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    <tr>
+                                        <td colspan = "4" align = "right">Total Cost: {{order.totalCost}}</td>
+                                    </tr>
+                                {% endfor %}
+                            
+                            {% else %}
+                                <table width = "20%">
+                                    <col style = "width:10%">
+                                    <col style = "width:15%">
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>Total Cost</td>
+                                    </tr>
+                                    {% for order in driver.orders %}
+                                    <tr>
+                                        <td>{{order.date}}</td>
+                                        <td>{{order.totalCost}}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </table>
+                        <p>Total Sales by Driver: {{driver.totalCost}}</p>
+                    {% endfor %}
+                    <p>Total Sales for Organization: {{org.totalCost}}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+/* Source for box shadows: https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_styles */
+html, body{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-y: auto;
+    background-color: #2a2a2e;
+}
+
+body{
+    padding-top: 60px;
+}
+
+#header{
+    background-color: #ACEFFF;
+}
+
+#title{
+    font-size: 110%;
+
+}
+
+#menubutton{
+    color: black;
+
+}
+
+.dropdown-menu{
+    background-color: #38383d;
+}
+
+.dropdown-item{
+    color: white;
+}
+
+#sidebar{
+    height: 100%;
+    width: 23.5%;
+    position: fixed;
+    border-right-style: solid;
+    border-right-color: #7070707e;
+    background-color: #2a2a2e;
+}
+
+#back{
+    font-size: 150%;
+    color: white;
+}
+
+#pointstitle{
+    font-size: 150%;
+    margin-top: 5%;
+    margin-bottom: 1%;
+    text-align: center;
+    color: white;
+}
+
+#points{
+    font-size: 150%;
+    text-align: center;
+    color: white;
+}
+
+#pagename{
+    text-align: right;
+    color: white;
+}
+
+#items{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+}
+
+#checkout{
+    width: fit-content;
+    height: fit-content;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-top: .1%;
+    padding-bottom: .1%;
+    border-radius: 30px;
+    background-color: #A1EDA7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-size: 130%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    cursor: pointer;
+    border-style: solid;
+    border-color: white;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    text-align: center;
+    position: absolute;
+    left: 85%;
+    top: 90%;
+}

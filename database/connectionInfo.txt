@@ -1,0 +1,5 @@
+mysql -h truckingdb.c9tkxb1tjvpp.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+
+Password: accesstodb
+
+Database: DRIVER_DB

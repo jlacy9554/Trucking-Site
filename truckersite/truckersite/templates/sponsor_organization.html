@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<meta charset="UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <title> My Organization </title>
+
+    <!-- Links the .css file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sponsor_organization.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        function remove() {
+            if (document.getElementById("pointchanges").value != "none") {
+                $('#removereason').modal('show');
+            }
+        }
+
+        function edit() {
+            if (document.getElementById("pointchanges").value != "none") {
+                $('#editreason').modal('show');
+            }
+        }
+
+        function removeSponsor() {
+            if (document.getElementById("sponsorsdp").value != "none") {
+                $('#removesponsor').modal('show');
+            }
+        }
+
+        function editSponsor() {
+            if (document.getElementById("sponsorsdp").value != "none") {
+                $('#editsponsor').modal('show');
+            }
+        }
+
+        function removeDriver() {
+            if (document.getElementById("driversdp").value != "none") {
+                $('#removedriver').modal('show');
+            }
+        }
+
+        function editDriver() {
+            if (document.getElementById("driversdp").value != "none") {
+                $('#editdriver').modal('show');
+            }
+        }
+
+        function editDriverPoints() {
+            if (document.getElementById("driversdp").value != "none") {
+                $('#editdriverpoints').modal('show');
+            }
+        }
+    </script>
+
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top" id="header">
+            <ul class="navbar-nav w-100 justify-content-between">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="menubutton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Menu </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'orgPage' %}"> Organization Page </a>
+                        <a class="dropdown-item" href="/sponsor_view_drivers"> Driver List </a>
+                        <a class="dropdown-item" href="/sponsor_application_list">Application List</a>
+                        <a class="dropdown-item" href="{%url 'sponsorCatalog' %}"> Catalog </a>
+                        <!-- <a class="dropdown-item" href="sponsor_notifications.html"> Notifications </a> -->
+                        <a class="dropdown-item" href="{% url 'sponsorReportGeneration'%}"> Generate Report </a>
+                        <!-- <a class="dropdown-item" href="sponsor_submit_issue.html"> Submit an Issue </a>
+                        <a class="dropdown-item" href="sponsor_view_issues.html"> Issues </a> -->
+                        <a class="dropdown-item" href="{% url 'logout' %}"> Logout </a>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'sponsorDashDisplay' %}" id="title"> Good Driver Incentive Program </a>
+                </li>
+
+                <a class="navbar-brand" href="{% url 'sponsorProfile'%}">
+                    <img src="{% static pic %}" width="30" height="30">
+                </a>
+            </ul>
+        </nav>
+
+
+
+        <div class="row">
+            <div class="col-md-3">
+                <p class="sectionheader" style="margin-top: 6%;"> General Organization Settings </p>
+                <a class="settingname" href="#changeorglogo"> Change Organization Logo </a> <br>
+                <a class="settingname" href="#pointchange"> Reasons for Point Changes </a> <br>
+                <a class="settingname" href="#newpointchange"> New Reason for Point Changes </a> <br>
+                <a class="settingname" href="#value"> Point Value </a> <br>
+                <a class="settingname" href="#creditcard"> Credit Card </a> <br>
+                <a class="settingname" href="#billingaddress"> Billing Address </a> <br>
+
+                <p class="sectionheader" style="margin-top: 6%;"> Organization Employees </p>
+                <a class="settingname" href="#orgsponsors"> Sponsor Users </a> <br>
+                <a class="settingname" href="#addsponsor"> Add Sponsor User </a> <br>
+                <a class="settingname" href="#orgdrivers"> Drivers </a> <br>
+
+                <p class="sectionheader" style="margin-top: 6%;"> Catalog </p>
+                <a class="settingname" href="#catalog"> Create Catalog </a> <br>
+                <a class="settingname" href="#current"> Current Catalog </a>
+            </div>
+
+            <div class="col-md-9 h-100">
+                <p class="setting" style="top: 3%;"> Change Organization Logo </p>
+                <img id="changeorglogo" src="{% static logo %}"> <br>
+                <form method="Post" enctype="multipart/form-data" action="{% url 'getNewOrgLogo' %}">
+                    {% csrf_token %}
+                    <input type="file" id="logo" name="logo" /> <br>
+                    <button id="upload" type="file"> Upload Image </button>
+                </form>
+
+                <p class="setting" id="pointchange" style="margin-top: 1.5%;"> Reasons for Point Changes </p>
+                <form method="Post" action="{% url 'editReason' %}">
+                    {% csrf_token %}
+                    <select class="form-control form-control-lg" id="pointchanges" name="reason" style="margin-bottom: 1.5%;">
+                        <option value = "none"> Select a Reason </option>
+
+                        {% for reason in reasons %}
+                            <option value = {{reason.id}}>{{reason.desc}}</option>
+                        {% endfor %}
+                    </select>
+                    <button id="remove" name = "remove"> Remove Reason </button>
+                    <button id="edit" name = "edit"> Edit Reason </button>
+                </form>
+
+                <p class="setting" id="newpointchange" style="margin-top: 1.5%;"> New Reason for Point Changes </p>
+                <form method="Post" action="{% url 'getNewPointChange' %}">
+                    {% csrf_token %}
+                    <input type="text" class="settingtext" id="numpoints" name="numPoints" placeholder="Number of Points to be Added or Removed" style="font-size: 140%;"> <br>
+                    <textarea id="newdescription" name="description" placeholder="Description"></textarea> <br>
+                    <button class="save" id="savepointchange"> <i class = "fa fa-save"></i> </button>
+                </form>
+
+                <p class="setting" id="value" style="margin-top: 1.5%;"> Point Value (Current Value: ${{pointRate}}/point)</p>
+                <form method="Post" action="{% url 'updatePointConversion' %}">
+                    {% csrf_token %}
+                    <input type="text" class="valuechanges" id="dollars" name="dollars" placeholder="Dollars (Ex. - 2.25)" style="font-size: 200%;">
+                    <h1 style="margin-left: 8%;"> = </h1>
+                    <input type="text" class="valuechanges" id="points" name="points" placeholder="Points (Ex. - 1.25)" style="font-size: 200%;">
+                    <button class="save" id="savepointchange"> <i class = "fa fa-save"></i> </button>
+                </form>
+
+                <p class="setting" id="creditcard" style="margin-top: 1.5%;"> Credit Card </p>
+                <p>Current Card Info</p>
+                <p>{{ccName}}</p>
+                <p>{{ccNum}}</p>
+                <p>{{ccDate}}</p>
+                <form method="Post" action="{% url 'updatePaymentInfo' %}">
+                    {% csrf_token %}
+                    <input type="text" class="settingtext" id="name" name="ccName" placeholder="Name on Card"> <br>
+                    <input type="text" class="settingtext" id="cardnum" name="ccNum" placeholder="Card Number" maxlength="16"> <br>
+                    <input type="text" class="settingtext" id="securitycode" name="ccSec" placeholder="Security Code" maxlength="3"> <br>
+                    <input type="text" class="settingtext" id="exp" placeholder="Expiration Date (mm/yy)" name="ccDate" maxlength="5">
+
+                    <p class="setting" id="bilingaddress" style="margin-top: 1.5%;"> Billing Address </p>
+                    <p>Current Billing Address: {{billAddr}}</p>
+                    <input type="text" class="settingtext" id="addressline1" name="addr1" placeholder="Address Line 1"> <br>
+                    <input type="text" class="settingtext" id="addressline2" name="addr2" placeholder="Address Line 2"> <br>
+                    <input type="text" class="settingtext" id="city" name="city" placeholder="City"> <br>
+                    <input type="text" class="settingtext" id="state" maxlength="2" name="state" placeholder="State"> <br>
+                    <input type="text" class="settingtext" maxlength=5 name="zip" placeholder="Zip">
+                    <button class="save" id="savePayment"> <i class = "fa fa-save"></i> </button>
+                </form>
+
+                <p class="setting" id="sponsors" style="margin-top: 1.5%;"> Sponsor Users </p>
+                <form method="Post" action="{% url 'editSponsor' %}">
+                    {% csrf_token %}
+                    <select class="form-control form-control-lg" id="sponsorsdp" name="sponsor" style="margin-bottom: 1.5%;">
+                        <option value = "none"> Select a Sponsor </option>
+
+                        {% for sponsor in sponsors %}
+                            <option value = {{sponsor.id}}>{{sponsor.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button id="remove" name = "remove"> Remove Sponsor </button>
+                    <button id="edit" name = "edit"> Edit Sponsor Info </button>
+                </form>
+
+                <p class="setting" id="addsponsor" style="margin-top: 1.5%;"> Add Sponsor Users</p>
+                <form method="Post" action="{% url 'addNewSponsor' %}">
+                    {% csrf_token %}
+                    <input type="text" class="settingtext" id="newsponsoremail" name="email" placeholder="Email"> <br>
+                    <input type="text" class="settingtext" id="name" name="name" placeholder="Name"> <br>
+                    <button class="save" id="addsponsor"> Add Sponsor </button>
+                </form>
+
+                <p class="setting" id="drivers" style="margin-top: 1.5%;"> Drivers </p>
+                <form method="Post" action="{% url 'editDriver' %}">
+                    {% csrf_token %}
+                    <select class="form-control form-control-lg" id="driversdp" name="driver" style="margin-bottom: 1.5%;">
+                        <option value = "none"> Select a Driver </option>
+
+                        {% for driver in drivers %}
+                            <option value = {{driver.id}}>{{driver.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button id="remove" name = "remove"> Remove Driver </button>
+                    <button id="edit" name = "edit"> Edit Driver Info </button>
+                    <button id="editpoints" name = "points"> Edit Driver Points </button>
+                </form>
+
+                <p class="setting" id="catalog" style="margin-top: 1.5%;"> Create Catalog </p>
+                <!-- Source for Search Bar: https://getbootstrap.com/docs/4.1/components/input-group/ -->
+                <form method="Post" action="{% url 'getNewCatalogKeyword' %}">
+                    {% csrf_token %}
+                    <div class="input-group" style="width: 100%; margin-bottom: 2%;">
+                        <input type="text" class="form-control" placeholder="Enter Keywords to Filter Your Catalog" aria-label="search" aria-describedby="button-addon2" name="keyword">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="search"> Enter </button>
+                        </div>
+                    </div>
+                </form>
+
+                <a href="{% url 'createCatalog' %}"><button id="create"> Create Catalog </button></a><p>Note: This will take a few seconds</p>
+                <p class="setting" id="current" style="margin-top: 1.5%;"> Current Catalog Keywords</p>
+                <!-- As keywords are entered display them below the button; template below-->
+                <div>
+                    {% for keyword in keywords %}
+                    <h5>{{keyword.word}} <span> 
+                        <a href = "{% url 'removeCatalogKeyword' keyword.id %}"><button class = "delete"> <i class = "fa fa-window-close"></i> </button> </a></span></h5>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

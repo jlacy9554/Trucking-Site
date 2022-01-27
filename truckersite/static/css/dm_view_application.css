@@ -1,0 +1,71 @@
+/* Source for box shadows: https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_styles */
+html, body{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-y: auto;
+    background-color: #2a2a2e;
+    color: white;
+}
+
+body{
+    padding-top: 60px;
+}
+
+#header{
+    background-color: #ACEFFF;
+}
+
+#title{
+    font-size: 110%;
+
+}
+
+#menubutton{
+    color: black;
+
+}
+
+.dropdown-menu{
+    background-color: #38383d;
+}
+
+.dropdown-item{
+    color: white;
+}
+
+#accept{
+    width: fit-content;
+    height: fit-content;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-top: .1%;
+    padding-bottom: .1%;
+    border-radius: 30px;
+    background-color: #A1EDA7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-size: 200%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    cursor: pointer;
+    border-style: solid;
+    border-color: white;
+    margin: 1%;
+}
+
+#reject{
+    width: fit-content;
+    height: fit-content;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-top: .1%;
+    padding-bottom: .1%;
+    border-radius: 30px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background-color: #EDA1A1;
+    font-size: 200%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    border-style: solid;
+    border-color: white;
+    cursor: pointer;
+    margin: 1%;
+}

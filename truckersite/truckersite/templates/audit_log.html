@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang = "en-US">
+<meta charset = "UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title> Audit Log </title>
+
+    <!-- Links the .css file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/audit_log.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    
+    <div class = "container-fluid">
+
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <!-- Credit for navbar: https://getbootstrap.com/docs/4.1/components/navbar/-->
+        <nav class = "navbar navbar-expand-md navbar-light fixed-top" id = "header">
+            <ul class = "navbar-nav w-100 justify-content-between">
+                <li class = "nav-item dropdown">
+                    <a class = "nav-link dropdown-toggle" id = "menubutton" role = "button" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded = "false"> Menu </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class = "dropdown-item" href = "{% url 'adminOrgs' %}"> Organizations </a>
+                        <!-- <a class = "dropdown-item" href = "admin_notifications.html"> Notifications </a> -->
+                        <a class = "dropdown-item" href = "{% url 'adminReportGeneration'%}"> Generate Reports </a>
+                        <!-- <a class = "dropdown-item" href = "admin_view_issues.html"> Issues </a> -->
+                        <a class = "dropdown-item" href = "{% url 'logout' %}"> Logout </a>
+                    </div>
+                </li>
+
+                <li class = "nav-item active">
+                    <a class = "nav-link" href = "{% url 'adminDash' %}" id = "title"> Good Driver Incentive Program </a>
+                </li>
+
+                <a class = "navbar-brand" href = "{% url 'adminProfile'%}">
+                    <img src = "{% static pic %}" width = "30" height = "30">
+                </a>
+            </ul>
+        </nav>
+
+        <div class = "row">
+            <div class = "col-md-3">
+                    <a id = "back" href = "{% url 'adminReportGeneration'%}"> <i class = "fa fa-arrow-left"></i> Generate Report </a>
+                    <h3 class = "text-center" style = "margin-bottom: 5%; margin-top: 2%;"> Audit Log </h3>
+
+                    <h4> Select Audit Log Type </h4>
+                    <!-- Source: https://stackoverflow.com/questions/50895806/bootstrap-4-multiselect-dropdown/50897096 -->
+                    <form method = "Post" action = "{% url 'getAuditLog'%}">
+                        {% csrf_token %}
+                        <select id = "drivers" name = "logType" class = "selectpicker">
+                            <option value = "applications"> Driver Applications </option>
+                            <option value = "points"> Point Changes </option>
+                            <option value = "passwords"> Password Changes </option>
+                            <option value = "loginattemps"> Login Attempts </option>
+                        </select>
+
+                        <h4> Start Date </h4>
+                        <input type = "text" id = "start" name = "startDate" placeholder = "mm/dd/yy" maxlength = "8">
+                        <h4> End Date </h4>
+                        <input type = "text" id = "end" name = "endDate" placeholder = "mm/dd/yy" maxlength = "8">
+                        
+                        <button id = "generate" name = "generate"> Generate Report </button>
+                        <button id = "download" name = "download"> Download Report <i class = "fa fa-download"></i> </button>
+                    </form>
+            </div>
+
+            <div class = "col-md-9" id = "preview">
+                <p>Date Range: {{startDate}} - {{endDate}}</p>
+
+                {% if applications %}
+                    <table width = "70%">
+                        <col style = "width:15%">
+                        <col style = "width:20%">
+                        <col style = "width:20%">
+                        <col style = "width:15%">
+                        <col style = "width:50%">
+                        <tr>
+                            <td>Date</td>
+                            <td>Sponsor</td>
+                            <td>Applicant Name</td>
+                            <td>Status</td>
+                            <td>Reason</td>
+                        </tr>
+
+                        {% for applicant in applicants %}
+                            <tr>
+                                <td>{{applicant.date}}</td>
+                                <td>{{applicant.orgName}}</td>
+                                <td>{{applicant.name}}</td>
+                                
+                                {% if applicant.accepted %}
+                                    <td>Accepted</td>
+                                    <td>--------</td>
+                                {% else %}
+                                    <td>Rejected</td>
+                                    <td>{{applicant.reason}}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                {% elif points %}
+                    {% for driver, changes in drivers %}
+                        <p>Driver: {{driver}}</p>
+                        <table width="70%">
+                            <col style="width:20%">
+                            <col style="width:35%">
+                            <col style="width:30%">
+                            <col style="width:50%">
+                            <tr>
+                                <td>Date</td>
+                                <td>Point Change</td>
+                                <td>Sponsor</td>
+                                <td>Reason</td>
+                            </tr>
+
+                            {% for change in changes %}
+                                <tr>
+                                    <td>{{change.date}}</td>
+                                    <td>{{change.pointChange}}</td>
+                                    <td>{{change.orgName}}</td>
+                                    <td>{{change.reason}}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+
+                {% elif passwords %}
+                    {% for user, changes in users %}
+                        <p>User: {{user}}</p>
+                        <table width = "40%">
+                            <col style = "width:25%">
+                            <col style = "width:75%">
+                            <tr>
+                                <td>Date</td>
+                                <td>Type of Change</td>
+                            </tr>
+
+                            {% for change in changes %}
+                                <tr>
+                                    <td>{{change.date}}</td>
+                                    <td>{{change.changeType}}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+
+                {% elif login %}
+                    {% for user, attempts in users %}
+                        <p>User: {{user}}</p>
+                        <table width = "40%">
+                            <col style = "width:25%">
+                            <col style = "width:75%">
+                            <tr>
+                                <td>Date</td>
+                                <td>Status</td>
+                            </tr>
+
+                            {% for attempt in attempts %}
+                                <tr>
+                                    <td>{{attempt.date}}</td>
+                                    {% if attempt.succeeded %}
+                                        <td>Success</td>
+                                    {% else %}
+                                        <td>Failure</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+
+                {%endif%}
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+/* Source for box shadows: https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_styles */
+html, body{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-y: auto;
+    background-color: #2a2a2e;
+}
+
+body{
+    padding-top: 60px;
+}
+
+#header{
+    background-color: #ACEFFF;
+}
+
+#title{
+    font-size: 110%;
+
+}
+
+#menubutton{
+    color: black;
+
+}
+
+.dropdown-menu{
+    background-color: #38383d;
+}
+
+.dropdown-item{
+    color: white;
+}
+
+#pagename{
+    margin-top: 1%;
+    color: white;
+}
+
+#pagename{
+    font-family: Arial, Helvetica, sans-serif;
+    top: -1%;
+    left: 2%;
+    font-size: 170%;
+    position: absolute;
+    color: white;
+}
+
+#sidebar{
+    margin-top: 1.5%;
+    position: fixed;
+    width: 23.5%;
+    height: 95%;
+    top: 4%;
+    border-right-style: solid;
+    border-right-color: #7070707e;
+}
+
+#pointstitle{
+    font-size: 150%;
+    margin-top: 5%;
+    margin-bottom: 1%;
+    text-align: center;
+    color: white;
+}
+
+#points{
+    font-size: 150%;
+    text-align: center;
+    color: white;
+}
+
+#cart{
+    color: white;
+    font-size: 400%;
+}
+
+.form-control{
+    color: white;
+    background-color: #38383d;
+    border-color: white;
+}
+
+/* https://stackoverflow.com/questions/48258115/bootstrap-form-input-change-background-color-on-text-enter-and-revert-on-empty-f/48258157 */
+input:not(:placeholder-shown) {
+    background-color:  #38383d!important;
+    color: white;
+}
+ 
+input:placeholder-shown {
+    background-color:  #38383d!important;
+    color: white;
+}
+
+#search{
+    color: white;
+}
+
+#submit{
+    width: fit-content;
+    height: fit-content;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-top: .1%;
+    padding-bottom: .1%;
+    border-radius: 30px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background-color: #ACEFFF;
+    font-size: 120%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    border-style: solid;
+    border-color: white;
+    cursor: pointer;
+}

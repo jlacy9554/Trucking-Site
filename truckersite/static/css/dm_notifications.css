@@ -1,0 +1,50 @@
+/* Source for box shadows: https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_styles */
+html, body{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-y: auto;
+    background-color: #2a2a2e;
+    color: white;
+}
+
+body{
+    padding-top: 60px;
+}
+
+#header{
+    background-color: #ACEFFF;
+}
+
+#title{
+    font-size: 110%;
+
+}
+
+#menubutton{
+    color: black;
+
+}
+
+
+.dropdown-menu{
+    background-color: #38383d;
+}
+
+.dropdown-item{
+    color: white;
+}
+
+.deletenotification{
+    float: right;
+    width: fit-content;
+    height: fit-content;
+    border-style: none;
+    background-color: #2a2a2e;
+    font-size: 130%;
+    color: white;
+    cursor: pointer;
+    margin-left: 95%;
+}
+
+.notification{
+    border-bottom: 2px solid #7070706e;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang = "en-US">
+<meta charset = "UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <title> Good Driver Incentive Program </title>
+
+    <!-- Links the .css file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css'%}">
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+</head>
+
+<body>
+    
+    <div class = "container-fluid">
+        <div class = "row">
+            <div class = "col-md-12 text-center">
+
+                <p id = "websitename"> Good Driver Incentive Program </p>
+
+            </div>
+        </div>
+
+        <form method = "POST" action = "{% url 'login' %}">
+            {% csrf_token %}
+        <div class = "row text-center">
+            <div class = "col-md-12">
+
+                <input type = "text" class = "login" id = "emaillogin" maxlength = "100" placeholder = "Email" name="email" required>
+
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class = "col-md-12">
+
+                <!-- Source: https://stackoverflow.com/questions/46652210/bootstrap-modal-not-showing-up-on-click -->
+                <button class = "forgot" id = "forgotemail" data-toggle = "modal" data-target = "#email"> Forgot Email? </button>
+
+            </div>
+        </div>
+
+        <div class = "row text-center">
+            <div class = "col-md-12">
+
+                <input type = "password" class = "login" id = "passwordlogin" maxlength = "100" placeholder = "Password" name="password" required>
+
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class = "col-md-12">
+
+                <!-- Source: https://stackoverflow.com/questions/46652210/bootstrap-modal-not-showing-up-on-click -->
+                <button class = "forgot" id = "forgotpassword" data-toggle = "modal" data-target = "#password"> Forgot Password? </button>
+
+            </div>
+        </div>
+
+        <div class = "row text-center">
+            <div class = "col-md-12">
+                <input type="checkbox" id="remember" name="remember" value="true" checked> <label id = "remeberlabel" for = "remeber">Remember me</label><br>
+                <button id = "loginbutton"> Log in </button>
+
+            </div>
+        </div>
+        </form>
+
+        <div class = "row text-center">
+            <div class = "col-md-12">
+        
+                <!-- Linking another html document to a button source: https://www.w3schools.com/html/html_links.asp -->
+                <button id = "applybutton" onclick = "location.href = '{% url 'application' %}'"> Apply </button>
+        
+            </div>
+        </div>
+
+        <!-- Modal source: https://getbootstrap.com/docs/4.1/components/modal/ -->
+        <!-- Modal for forgot email -->
+        <div class = "modal fade" id = "email" tabindex = "-1" role = "dialog" aria-labelledby = "exampleModalLabel" aria-hidden = "true">
+            <div class = "modal-dialog" role = "document">
+                <div class = "modal-content">
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "exampleModalLabel">Forgot Email?</h5>
+                        <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close">
+                            <span aria-hidden = "true">&times;</span>
+                        </button>
+                        </div>
+                        <div class = "modal-body">
+                            If you forgot your email, contact your organization or a sponsor.
+                        </div>
+                        <div class = "modal-footer">
+                            <button type = "button" class = "btn btn-secondary" data-dismiss = "modal" style = "background-color: #EDA1A1; border-color: #EDA1A1; color: black;"> No </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal source: https://getbootstrap.com/docs/4.1/components/modal/ -->
+        <!-- Modal for forgot password  -->
+        <div class = "modal fade" id = "password" tabindex = "-1" role = "dialog" aria-labelledby = "exampleModalLabel" aria-hidden = "true">
+            <div class = "modal-dialog" role = "document">
+                <div class = "modal-content">
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "exampleModalLabel">Forgot Password?</h5>
+                        <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close">
+                            <span aria-hidden = "true">&times;</span>
+                        </button>
+                        </div>
+                        <div class = "modal-body">
+                            Enter email to receive a link to reset your password.
+                            <input type = "text" class = "login" id = "resetpassword" maxlength = "100" placeholder = "Email" name="email">
+                        </div>
+                        <div class = "modal-footer">
+                            <button type = "button" class = "btn btn-secondary" data-dismiss = "modal" style = "background-color: #EDA1A1; border-color: #EDA1A1; color: black;"> Cancel </button>
+                            <button type = "button" id = "delete" style = "background-color: #A1EDA7; border-color: #A1EDA7; color: black;" class = "btn btn-primary"> Send </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
